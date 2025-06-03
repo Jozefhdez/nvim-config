@@ -284,6 +284,47 @@ require('lazy').setup({
     },
   },
 
+{
+  'goolord/alpha-nvim',
+  event = 'VimEnter',
+  dependencies = { 'nvim-tree/nvim-web-devicons' },
+  config = function()
+    local dashboard = require'alpha.themes.dashboard'
+  dashboard.section.header.val = {
+    " ▄▄▄██▀▀▀▒█████  ▒███████▒▓█████   █████▒ ",
+    "   ▒██  ▒██▒  ██▒▒ ▒ ▒ ▄▀░▓█   ▀ ▓██   ▒ ",
+    "   ░██  ▒██░  ██▒░ ▒ ▄▀▒░ ▒███   ▒████ ░ ",
+    "▓██▄██▓ ▒██   ██░  ▄▀▒   ░▒▓█  ▄ ░▓█▒  ░ ",
+    " ▓███▒  ░ ████▓▒░▒███████▒░▒████▒░▒█░    ",
+    " ▒▓▒▒░  ░ ▒░▒░▒░ ░▒▒ ▓░▒░▒░░ ▒░ ░ ▒ ░    ",
+    " ▒ ░▒░    ░ ▒ ▒░ ░░▒ ▒ ░ ▒ ░ ░  ░ ░      ",
+    " ░ ░ ░  ░ ░ ░ ▒  ░ ░ ░ ░ ░   ░    ░ ░    ",
+    " ░   ░      ░ ░    ░ ░       ░  ░        ",
+    "                 ░                       ",
+  }
+
+    dashboard.section.buttons.val = {
+      dashboard.button("e", "  Nuevo archivo", ":ene <BAR> startinsert <CR>"),
+      dashboard.button("f", "  Buscar archivo", ":Telescope find_files<CR>"),
+      dashboard.button("r", "  Archivos recientes", ":Telescope oldfiles<CR>"),
+      dashboard.button("c", "  Configuración", ":e $MYVIMRC<CR>"),
+      dashboard.button("q", "  Salir", ":qa<CR>"),
+    }
+
+    dashboard.config.layout = {
+      { type = "padding", val = 10 },
+      dashboard.section.header,
+      { type = "padding", val = 2 },
+      dashboard.section.buttons,
+      { type = "padding", val = 2 },
+      dashboard.section.footer,
+    }
+
+    dashboard.section.footer.val = "jozefhdez"
+    require'alpha'.setup(dashboard.config)
+  end,
+},
+
   -- NOTE: Plugins can also be configured to run Lua code when they are loaded.
   --
   -- This is often very useful to both group configuration, as well as handle
@@ -996,7 +1037,7 @@ require('lazy').setup({
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the
     -- default lazy.nvim defined Nerd Font icons, otherwise define a unicode icons table
-    icons = vim.g.have_nerd_font and {} or {
+    icons =  {
       cmd = '⌘',
       config = '🛠',
       event = '📅',
