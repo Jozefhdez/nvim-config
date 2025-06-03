@@ -9,9 +9,4 @@ This repository contains my personalized Neovim configuration.
 ```bash
 git clone https://github.com/Jozefhdez/nvim-config.git ~/.config/nvim
 ```
-2. Open Neovim and run:
 
-```vim
-:PackerSync
-```
-to install and update the configured plugins.
