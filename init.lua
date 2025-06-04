@@ -325,6 +325,47 @@ require('lazy').setup({
   end,
 },
 
+  {
+  'nvim-tree/nvim-tree.lua',
+  dependencies = { 'nvim-tree/nvim-web-devicons' },
+  config = function()
+    require('nvim-tree').setup()
+    -- Atajo para abrir/cerrar el explorador de archivos con <leader>±
+    vim.keymap.set('n', '<leader>±', ':NvimTreeToggle<CR>', { desc = 'Toggle NvimTree' })
+    -- Atajo para enfocar el explorador de archivos con <leader>§
+    vim.keymap.set('n', '<leader>§', ':NvimTreeFocus<CR>', { desc = 'Enfocar NvimTree' })
+  end,
+},
+
+{
+  'nvim-lualine/lualine.nvim',
+  dependencies = { 'nvim-tree/nvim-web-devicons' },
+  config = function()
+    require('lualine').setup {
+      options = {
+        theme = 'rose-pine',
+      },
+    }
+  end,
+},
+
+{
+  'windwp/nvim-autopairs',
+  event = 'InsertEnter',
+  config = function()
+    require('nvim-autopairs').setup()
+  end,
+},
+
+{
+  'akinsho/bufferline.nvim',
+  version = "*",
+  dependencies = 'nvim-tree/nvim-web-devicons',
+  config = function()
+    require('bufferline').setup()
+  end,
+},
+
   -- NOTE: Plugins can also be configured to run Lua code when they are loaded.
   --
   -- This is often very useful to both group configuration, as well as handle
