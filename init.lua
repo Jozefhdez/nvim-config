@@ -205,6 +205,13 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 -- vim.keymap.set("n", "<C-S-j>", "<C-w>J", { desc = "Move window to the lower" })
 -- vim.keymap.set("n", "<C-S-k>", "<C-w>K", { desc = "Move window to the upper" })
 
+-- Changing to the next buffer with Tab
+vim.keymap.set('n', '<Tab>', ':BufferLineCycleNext<CR>', { desc = 'Siguiente buffer' })
+-- Changing to the previous buffer with Shift+Tab
+vim.keymap.set('n', '<S-Tab>', ':BufferLineCyclePrev<CR>', { desc = 'Buffer anterior' })
+-- Close the current buffer with <leader>w
+vim.keymap.set('n', '<leader>w', ':bd<CR>', { desc = 'Cerrar buffer actual' })
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
@@ -248,6 +255,10 @@ rtp:prepend(lazypath)
 require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'NMAC427/guess-indent.nvim', -- Detect tabstop and shiftwidth automatically
+  {
+    dir = '~/touchtype.nvim',
+    name = 'touchtype',
+  },
 
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
@@ -284,87 +295,87 @@ require('lazy').setup({
     },
   },
 
-{
-  'goolord/alpha-nvim',
-  event = 'VimEnter',
-  dependencies = { 'nvim-tree/nvim-web-devicons' },
-  config = function()
-    local dashboard = require'alpha.themes.dashboard'
-  dashboard.section.header.val = {
-    " ▄▄▄██▀▀▀▒█████  ▒███████▒▓█████   █████▒ ",
-    "   ▒██  ▒██▒  ██▒▒ ▒ ▒ ▄▀░▓█   ▀ ▓██   ▒ ",
-    "   ░██  ▒██░  ██▒░ ▒ ▄▀▒░ ▒███   ▒████ ░ ",
-    "▓██▄██▓ ▒██   ██░  ▄▀▒   ░▒▓█  ▄ ░▓█▒  ░ ",
-    " ▓███▒  ░ ████▓▒░▒███████▒░▒████▒░▒█░    ",
-    " ▒▓▒▒░  ░ ▒░▒░▒░ ░▒▒ ▓░▒░▒░░ ▒░ ░ ▒ ░    ",
-    " ▒ ░▒░    ░ ▒ ▒░ ░░▒ ▒ ░ ▒ ░ ░  ░ ░      ",
-    " ░ ░ ░  ░ ░ ░ ▒  ░ ░ ░ ░ ░   ░    ░ ░    ",
-    " ░   ░      ░ ░    ░ ░       ░  ░        ",
-    "                 ░                       ",
-  }
+  {
+    'goolord/alpha-nvim',
+    event = 'VimEnter',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    config = function()
+      local dashboard = require 'alpha.themes.dashboard'
+      dashboard.section.header.val = {
+        ' ▄▄▄██▀▀▀▒█████  ▒███████▒▓█████   █████▒ ',
+        '   ▒██  ▒██▒  ██▒▒ ▒ ▒ ▄▀░▓█   ▀ ▓██   ▒ ',
+        '   ░██  ▒██░  ██▒░ ▒ ▄▀▒░ ▒███   ▒████ ░ ',
+        '▓██▄██▓ ▒██   ██░  ▄▀▒   ░▒▓█  ▄ ░▓█▒  ░ ',
+        ' ▓███▒  ░ ████▓▒░▒███████▒░▒████▒░▒█░    ',
+        ' ▒▓▒▒░  ░ ▒░▒░▒░ ░▒▒ ▓░▒░▒░░ ▒░ ░ ▒ ░    ',
+        ' ▒ ░▒░    ░ ▒ ▒░ ░░▒ ▒ ░ ▒ ░ ░  ░ ░      ',
+        ' ░ ░ ░  ░ ░ ░ ▒  ░ ░ ░ ░ ░   ░    ░ ░    ',
+        ' ░   ░      ░ ░    ░ ░       ░  ░        ',
+        '                 ░                       ',
+      }
 
-    dashboard.section.buttons.val = {
-      dashboard.button("e", "  Nuevo archivo", ":ene <BAR> startinsert <CR>"),
-      dashboard.button("f", "  Buscar archivo", ":Telescope find_files<CR>"),
-      dashboard.button("r", "  Archivos recientes", ":Telescope oldfiles<CR>"),
-      dashboard.button("c", "  Configuración", ":e $MYVIMRC<CR>"),
-      dashboard.button("q", "  Salir", ":qa<CR>"),
-    }
+      dashboard.section.buttons.val = {
+        dashboard.button('e', '  Nuevo archivo', ':ene <BAR> startinsert <CR>'),
+        dashboard.button('f', '  Buscar archivo', ':Telescope find_files<CR>'),
+        dashboard.button('r', '  Archivos recientes', ':Telescope oldfiles<CR>'),
+        dashboard.button('c', '  Configuración', ':e $MYVIMRC<CR>'),
+        dashboard.button('q', '  Salir', ':qa<CR>'),
+      }
 
-    dashboard.config.layout = {
-      { type = "padding", val = 10 },
-      dashboard.section.header,
-      { type = "padding", val = 2 },
-      dashboard.section.buttons,
-      { type = "padding", val = 2 },
-      dashboard.section.footer,
-    }
+      dashboard.config.layout = {
+        { type = 'padding', val = 10 },
+        dashboard.section.header,
+        { type = 'padding', val = 2 },
+        dashboard.section.buttons,
+        { type = 'padding', val = 2 },
+        dashboard.section.footer,
+      }
 
-    dashboard.section.footer.val = "jozefhdez"
-    require'alpha'.setup(dashboard.config)
-  end,
-},
+      dashboard.section.footer.val = 'jozefhdez'
+      require('alpha').setup(dashboard.config)
+    end,
+  },
 
   {
-  'nvim-tree/nvim-tree.lua',
-  dependencies = { 'nvim-tree/nvim-web-devicons' },
-  config = function()
-    require('nvim-tree').setup()
-    -- Atajo para abrir/cerrar el explorador de archivos con <leader>±
-    vim.keymap.set('n', '<leader>±', ':NvimTreeToggle<CR>', { desc = 'Toggle NvimTree' })
-    -- Atajo para enfocar el explorador de archivos con <leader>§
-    vim.keymap.set('n', '<leader>§', ':NvimTreeFocus<CR>', { desc = 'Enfocar NvimTree' })
-  end,
-},
+    'nvim-tree/nvim-tree.lua',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    config = function()
+      require('nvim-tree').setup()
+      -- Atajo para abrir/cerrar el explorador de archivos con <leader>±
+      vim.keymap.set('n', '<leader>±', ':NvimTreeToggle<CR>', { desc = 'Toggle NvimTree' })
+      -- Atajo para enfocar el explorador de archivos con <leader>§
+      vim.keymap.set('n', '<leader>§', ':NvimTreeFocus<CR>', { desc = 'Focus NvimTree' })
+    end,
+  },
 
-{
-  'nvim-lualine/lualine.nvim',
-  dependencies = { 'nvim-tree/nvim-web-devicons' },
-  config = function()
-    require('lualine').setup {
-      options = {
-        theme = 'rose-pine',
-      },
-    }
-  end,
-},
+  {
+    'nvim-lualine/lualine.nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    config = function()
+      require('lualine').setup {
+        options = {
+          theme = 'rose-pine',
+        },
+      }
+    end,
+  },
 
-{
-  'windwp/nvim-autopairs',
-  event = 'InsertEnter',
-  config = function()
-    require('nvim-autopairs').setup()
-  end,
-},
+  {
+    'windwp/nvim-autopairs',
+    event = 'InsertEnter',
+    config = function()
+      require('nvim-autopairs').setup()
+    end,
+  },
 
-{
-  'akinsho/bufferline.nvim',
-  version = "*",
-  dependencies = 'nvim-tree/nvim-web-devicons',
-  config = function()
-    require('bufferline').setup()
-  end,
-},
+  {
+    'akinsho/bufferline.nvim',
+    version = '*',
+    dependencies = 'nvim-tree/nvim-web-devicons',
+    config = function()
+      require('bufferline').setup()
+    end,
+  },
 
   -- NOTE: Plugins can also be configured to run Lua code when they are loaded.
   --
@@ -1078,7 +1089,7 @@ require('lazy').setup({
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the
     -- default lazy.nvim defined Nerd Font icons, otherwise define a unicode icons table
-    icons =  {
+    icons = {
       cmd = '⌘',
       config = '🛠',
       event = '📅',
