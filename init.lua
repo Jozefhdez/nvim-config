@@ -255,10 +255,16 @@ rtp:prepend(lazypath)
 require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'NMAC427/guess-indent.nvim', -- Detect tabstop and shiftwidth automatically
-  {
-    dir = '~/touchtype.nvim',
-    name = 'touchtype',
-  },
+
+{
+  dir = "~/touchtype.nvim", -- o la ruta local exacta
+  name = "touchtype.nvim",
+  config = function()
+    require("touchtype").setup()
+  end,
+  dependencies = { "nvim-lua/plenary.nvim" },
+},
+
 
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
