@@ -256,15 +256,14 @@ require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'NMAC427/guess-indent.nvim', -- Detect tabstop and shiftwidth automatically
 
-{
-  dir = "~/touchtype.nvim", -- o la ruta local exacta
-  name = "touchtype.nvim",
-  config = function()
-    require("touchtype").setup()
-  end,
-  dependencies = { "nvim-lua/plenary.nvim" },
-},
-
+  {
+    dir = '~/touchtype.nvim',
+    name = 'touchtype.nvim',
+    config = function()
+      require('touchtype').setup()
+    end,
+    dependencies = { 'nvim-lua/plenary.nvim' },
+  },
 
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
@@ -299,6 +298,38 @@ require('lazy').setup({
         changedelete = { text = '~' },
       },
     },
+  },
+
+  {
+    'zbirenbaum/copilot.lua',
+    cmd = 'Copilot',
+    build = ':Copilot auth',
+    event = 'InsertEnter',
+    config = function()
+      require('copilot').setup {}
+    end,
+  },
+
+  {
+    'CopilotC-Nvim/CopilotChat.nvim',
+    branch = 'main',
+    dependencies = {
+      { 'zbirenbaum/copilot.lua' },
+      { 'nvim-lua/plenary.nvim' },
+    },
+    config = function()
+      require('CopilotChat').setup {
+        window = {
+          width = 50,
+          height = 10,
+        },
+      }
+      -- space ch para abrir Copilot Chat
+      vim.keymap.set('n', '<leader>ch', ':CopilotChatOpen<CR>', { desc = 'Abrir Copilot Chat (panel)' })
+      vim.keymap.set('n', '<leader>c', function()
+        require('CopilotChat').select_prompt(require('CopilotChat.actions').chat)
+      end, { desc = 'Abrir Copilot Chat' })
+    end,
   },
 
   {
@@ -354,17 +385,16 @@ require('lazy').setup({
     end,
   },
 
-  {
-    'nvim-lualine/lualine.nvim',
-    dependencies = { 'nvim-tree/nvim-web-devicons' },
-    config = function()
-      require('lualine').setup {
-        options = {
-          theme = 'rose-pine',
-        },
-      }
-    end,
-  },
+{
+  'scottmckendry/cyberdream.nvim',
+  priority = 1000,
+  config = function()
+    require('cyberdream').setup {
+      transparent = true,
+    }
+    vim.cmd.colorscheme 'cyberdream'
+  end,
+},
 
   {
     'windwp/nvim-autopairs',
@@ -973,30 +1003,6 @@ require('lazy').setup({
       -- Shows a signature help window while you type arguments for a function
       signature = { enabled = true },
     },
-  },
-
-  { -- You can easily change to a different colorscheme.
-    -- Change the name of the colorscheme plugin below, and then
-    -- change the command in the config to whatever the name of that colorscheme is.
-    --
-    -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-    'rose-pine/neovim',
-    name = 'rose-pine',
-    priority = 1000, -- Make sure to load this before all the other start plugins.
-    config = function()
-      ---@diagnostic disable-next-line: missing-fields
-      require('rose-pine').setup {
-        variant = 'dawn',
-        styles = {
-          comments = { italic = true }, -- Disable italics in comments
-        },
-      }
-
-      -- Load the colorscheme here.
-      -- Like many other themes, this one has different styles, and you could load
-      -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'rose-pine'
-    end,
   },
 
   -- Highlight todo, notes, etc in comments
