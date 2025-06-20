@@ -82,11 +82,11 @@ vim.keymap.set("n", "<C-j>", "<C-w><C-j>", { desc = "Move focus to the lower win
 vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper window" })
 
 -- Changing to the next buffer with Tab
-vim.keymap.set("n", "<Tab>", ":BufferLineCycleNext<CR>", { desc = "Siguiente buffer" })
+vim.keymap.set("n", "<Tab>", ":BufferLineCycleNext<CR>", { desc = "Next buffer" })
 -- Changing to the previous buffer with Shift+Tab
-vim.keymap.set("n", "<S-Tab>", ":BufferLineCyclePrev<CR>", { desc = "Buffer anterior" })
+vim.keymap.set("n", "<S-Tab>", ":BufferLineCyclePrev<CR>", { desc = "Previous buffer" })
 -- Close the current buffer with <leader>w
-vim.keymap.set("n", "<leader>w", ":bd<CR>", { desc = "Cerrar buffer actual" })
+vim.keymap.set("n", "<leader>w", ":bd<CR>", { desc = "Close current buffer" })
 
 -- [[ Basic Autocommands ]]
 
@@ -176,10 +176,10 @@ require("lazy").setup({
 				},
 			})
 			-- space ch to open copilot chat
-			vim.keymap.set("n", "<leader>ch", ":CopilotChatOpen<CR>", { desc = "Abrir Copilot Chat (panel)" })
+			vim.keymap.set("n", "<leader>ch", ":CopilotChatOpen<CR>", { desc = "Open Copilot Chat (panel)" })
 			vim.keymap.set("n", "<leader>c", function()
 				require("CopilotChat").select_prompt(require("CopilotChat.actions").chat)
-			end, { desc = "Abrir Copilot Chat" })
+			end, { desc = "Open Copilot Chat" })
 		end,
 	},
 
